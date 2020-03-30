@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { isAuthenticated } from "./services/auth";
 
 import StartRequestPage from "./pages/StartRequestPage";
+import SimulacaoTaxas from "./pages/SimulacaoTaxas";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -21,7 +22,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 const Routes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={StartRequestPage} />
+            <Route exact path="/" component={SimulacaoTaxas} />
             {/* <Route exact path="/login" component={Login} />
       <PrivateRoute exact path="/" component={HomePage} />
       <PrivateRoute exact path="/cart" component={CartPage} />

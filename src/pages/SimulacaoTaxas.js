@@ -20,9 +20,11 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import StyleIcon from '@material-ui/icons/Style';
 import Navbar from '../components/Navbar';
+import BottomNavbar from '../components/BottomNavBar';
 import Header from '../components/Header';
 
 import SelectValue from '../components/SelectValue';
+import SelectTable from '../components/SelectTable';
 import BuscarCliente from '../components/BuscarCliente';
 // import AppBar from '@material-ui/core/AppBar';
 
@@ -59,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const StartRequestPage = () => {
+const SimulacaoTaxas = () => {
     const [requestValue, setRequestValue] = useState(0.0);
     const [loadedTable, setLoadedTable] = useState(false);
     const [selectedTable, setSelectedTable] = useState();
@@ -84,13 +86,14 @@ const StartRequestPage = () => {
             <Navbar />
             <Container maxWidth="md">
                 <Header title="Simulação de Taxas" icon={AllInboxIcon} />
-                
+                <SelectTable />
                 {/* <SelectValue /> */}
-                <BuscarCliente />
+                {/* <BuscarCliente /> */}
 
             </Container>
+            <BottomNavbar />
         </div>
     );
 }
 
-export default StartRequestPage;
+export default SimulacaoTaxas;
