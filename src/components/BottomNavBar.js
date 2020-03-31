@@ -1,122 +1,86 @@
-import React, { useState } from 'react';
-import { makeStyles, AppBar, Toolbar, Fab, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Typography, Menu, MenuItem, Button } from '@material-ui/core';
+import React from 'react';
+import { makeStyles, AppBar, Toolbar, Box, Typography, Button } from '@material-ui/core';
 
-import MenuIcon from '@material-ui/icons/Menu';
-import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
-import MoreIcon from '@material-ui/icons/More';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-
-import clsx from 'clsx';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import StyleIcon from '@material-ui/icons/Style';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     text: {
-      padding: theme.spacing(2, 2, 0),
+        padding: theme.spacing(2, 2, 0),
     },
     paper: {
-      paddingBottom: 50,
+        paddingBottom: 50,
     },
     list: {
-      marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(2),
     },
     subheader: {
-      backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.palette.background.paper,
     },
     appBar: {
-      top: 'auto',
-      bottom: 0,
+        top: 'auto',
+        bottom: 0,
+        backgroundColor: '#228A95',
+        color: 'white'
     },
     grow: {
-      flexGrow: 1,
+
+        flexGrow: 1,
+        alignItems: 'center',
+        alignContent: 'center'
+    },
+    textArea: {
+        paddingRight: 10,
     },
     fabButton: {
-      position: 'absolute',
-      zIndex: 1,
-      top: -30,
-      left: 0,
-      right: 0,
-      margin: '0 auto',
+        position: 'absolute',
+        zIndex: 1,
+        top: -30,
+        left: 0,
+        right: 0,
+        margin: '0 auto',
     },
-  }));
+}));
 
-const BottomNavbar = () => {
+const BottomNavbar = (props) => {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [enableDrawer, setEnableDrawer] = React.useState(false);
-    const openDropdownMenu = Boolean(anchorEl);
-
-    const toggleDrawer = (open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-        setEnableDrawer(open)
-    };
-
-    const list = (anchor) => (
-        <div
-            className={classes.list}
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
-        >
-            <List>
-                <ListItem button key="start-request">
-                    <ListItemIcon><StyleIcon></StyleIcon></ListItemIcon>
-                    <ListItemText primary="Simulação de Taxas" />
-                </ListItem>
-                {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))} */}
-            </List>
-            {/* <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List> */}
-        </div>
-    );
-
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    // const openDropdownMenu = Boolean(anchorEl);
+    const title = props.tableName;
+    const parcelas = props.numberParcelas;
+    const valor = props.parcelaValue;
+    const onCancelButton = props.onCancelButton;
+    const onNextButton = props.onNextButton;
+    const onNextLink = props.onNextLink;
 
     return (
         <>
-            <AppBar position="fixed" color="primary" className={classes.appBar}>
+            <AppBar position="fixed" color="default" className={classes.appBar}>
                 <Toolbar>
-                    <Typography>
-                        Nome: Tabela Padrão
-                    </Typography>
-                    <Typography>
-                        Parcelas: 2
-                    </Typography>
-                    <IconButton edge="start" color="inherit" aria-label="open drawer">
-                        <MenuIcon />
-                    </IconButton>
-                    <Fab color="secondary" aria-label="add" className={classes.fabButton}>
-                        <AddIcon />
-                    </Fab>
-                    <div className={classes.grow} />
-                    <IconButton color="inherit">
-                        <SearchIcon />
-                    </IconButton>
-                    <IconButton edge="end" color="inherit">
-                        <MoreIcon />
-                    </IconButton>
+
+                    <Box display="flex" p={1} justifyContent="center" className={classes.grow}>
+                        <Typography variant="p" className={classes.textArea}>
+                            <b>Nome:</b> {title}
+                        </Typography>
+                        <Typography variant="p" className={classes.textArea}>
+                            <b>Parcelas:</b> {parcelas}
+                        </Typography>
+                        <Typography variant="p" className={classes.textArea}>
+                            <b>Valor da Parcela:</b> {parseFloat(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                        </Typography>
+                    </Box>
+                    <Button style={{ marginRight: 6, color: "white" }} onClick={() => onCancelButton()}>
+                        {/* <MoreIcon /> */}
+                        <Typography variant="p">
+                            Cancelar
+                        </Typography>
+                    </Button>
+                    <Link to={onNextButton ? onNextLink : ""} style={{textDecoration:'none'}}>
+                        <Button style={{ backgroundColor: "#EF9C4B", color: "white"}}>
+                            {/* <MoreIcon /> */}
+                            <Typography variant="p">
+                                Avançar
+                        </Typography>
+                        </Button>
+                    </Link>
                 </Toolbar>
             </AppBar>
         </>

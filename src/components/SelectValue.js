@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Box, ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Radio, RadioGroup, Checkbox, ExpansionPanelDetails, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputBase, TextField, AppBar, Toolbar, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Typography, Menu, MenuItem, Button, Container } from '@material-ui/core';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { Box,Typography, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import CurrencyTextField from '@unicef/material-ui-currency-textfield';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,8 +37,6 @@ const useStyles = makeStyles((theme) => ({
 const SelectValue = () => {
     const [requestValue, setRequestValue] = useState(0.0);
     const [loadedTable, setLoadedTable] = useState(false);
-    const [selectedTable, setSelectedTable] = useState();
-    const [selectedPanel, setSelectedPanel] = useState();
     const [tables, setTables] = useState([]);
     const classes = useStyles();
 

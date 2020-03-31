@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
-import { makeStyles, AppBar, Toolbar, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Typography, Menu, MenuItem, Button } from '@material-ui/core';
+import React from 'react';
+import { makeStyles, AppBar, Toolbar, Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, Typography, Menu, MenuItem, Button } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-import clsx from 'clsx';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import StyleIcon from '@material-ui/icons/Style';
 
 const useStyles = makeStyles((theme) => ({

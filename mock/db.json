@@ -1,0 +1,158 @@
+{
+  "tables": [
+    {
+      "id": 1,
+      "title": "Tabela Padrão",
+      "selected": true,
+      "rows": [
+        {
+          "parcela": 1,
+          "juros": 15.0,
+          "valor": 1150.0,
+          "total": 1150.0,
+          "comissao": 30,
+          "selected": false
+        },
+        {
+          "parcela": 2,
+          "juros": 30.0,
+          "valor": 650.0,
+          "total": 1300.0,
+          "comissao": 40
+        },
+        {
+          "parcela": 3,
+          "juros": 32.0,
+          "valor": 440.0,
+          "total": 1320.0,
+          "comissao": 50
+        },
+        {
+          "parcela": 4,
+          "juros": 34.0,
+          "valor": 335.0,
+          "total": 1340.0,
+          "comissao": 60
+        },
+        {
+          "parcela": 5,
+          "juros": 36.0,
+          "valor": 272.0,
+          "total": 1350.0,
+          "comissao": 70
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Tabela Numero 2",
+      "rows": [
+        {
+          "parcela": 1,
+          "juros": 15.0,
+          "valor": 1150.0,
+          "total": 1150.0,
+          "comissao": 30
+        },
+        {
+          "parcela": 2,
+          "juros": 30.0,
+          "valor": 650.0,
+          "total": 1300.0,
+          "comissao": 40
+        },
+        {
+          "parcela": 3,
+          "juros": 32.0,
+          "valor": 440.0,
+          "total": 1320.0,
+          "comissao": 50
+        },
+        {
+          "parcela": 4,
+          "juros": 34.0,
+          "valor": 335.0,
+          "total": 1340.0,
+          "comissao": 60
+        },
+        {
+          "parcela": 5,
+          "juros": 36.0,
+          "valor": 272.0,
+          "total": 1350.0,
+          "comissao": 70
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Terceira Tabela",
+      "selected": true,
+      "rows": [
+        {
+          "parcela": 1,
+          "juros": 15.0,
+          "valor": 1150.0,
+          "total": 1150.0,
+          "comissao": 30,
+          "selected": false
+        },
+        {
+          "parcela": 2,
+          "juros": 30.0,
+          "valor": 650.0,
+          "total": 1300.0,
+          "comissao": 40
+        },
+        {
+          "parcela": 3,
+          "juros": 32.0,
+          "valor": 440.0,
+          "total": 1320.0,
+          "comissao": 50
+        },
+        {
+          "parcela": 4,
+          "juros": 34.0,
+          "valor": 335.0,
+          "total": 1340.0,
+          "comissao": 60
+        },
+        {
+          "parcela": 5,
+          "juros": 36.0,
+          "valor": 272.0,
+          "total": 1350.0,
+          "comissao": 70
+        }
+      ]
+    }
+  ],
+  "clientes": [
+    {
+      "cpf": "123.456.789-01",
+      "name": "Josué da Silva Lima"
+    },
+    {
+      "cpf": "123.456.789-02",
+      "name": "Marcia Santos"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

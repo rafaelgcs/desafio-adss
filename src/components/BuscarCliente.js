@@ -1,30 +1,14 @@
 import React, { useState } from 'react';
-import { Box, ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Radio, RadioGroup, Checkbox, ExpansionPanelDetails, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputBase, TextField, AppBar, Toolbar, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Typography, Menu, MenuItem, Button, Container } from '@material-ui/core';
+import { Box, Collapse, IconButton, Typography, Button } from '@material-ui/core';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-// import * as Colors from '@material-ui/styles/colors';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import getMuiTheme from '@material-ui/styles/getMuiTheme';
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
-import PropTypes from 'prop-types';
-import MaskedInput from 'react-text-mask';
-import NumberFormat from 'react-number-format';
+import { Link } from 'react-router-dom';
+import { Alert } from '@material-ui/lab';
 import { TextInput } from "./MaskedInput";
 
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import AllInboxIcon from '@material-ui/icons/AllInbox';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import clsx from 'clsx';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import StyleIcon from '@material-ui/icons/Style';
+import CloseIcon from '@material-ui/icons/Close';
 
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import InputMask from 'react-input-mask'
+import api from '../services/api';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -93,35 +77,68 @@ const BlueButton = withStyles((theme) => ({
     },
 }))(Button);
 
+const alerts = [
+    "Nenhum usuário foi encontrado com esse CPF!"
+];
+
 const BuscarCliente = (props) => {
     const [requestValue, setRequestValue] = useState();
-    const [loadedTable, setLoadedTable] = useState(false);
-    const [user, setUser] = useState({ cpf: "123.456.789-10", name: "Usuário Teste" });
-    const [tables, setTables] = useState([]);
+    const [_showClientSelected, setShowClientSelected] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [user, setUser] = useState();
+    const [_selectedClient, setSelectedClient] = useState(false);
     const classes = useStyles();
 
-    const [values, setValues] = React.useState({
-        textmask: '(1  )    -    ',
-        numberformat: '1320',
-    });
-
     const handleChangeRequestValue = (event) => {
+        setShowAlert(false);
+        setAlertMessage("");
         setRequestValue(event.target.value);
     }
 
-    const handleChange = (event) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        });
-    };
+    const handleClickSelectClient = async () => {
+        const selectedData = localStorage.getItem('@credfica:app-selectedTaxa');
+        let jsonSelectData = JSON.parse(selectedData);
+        // selectedData.
+        jsonSelectData.cliente = user;
+        console.log(selectedData)
+        localStorage.setItem('@credfica:app-selectedTaxa', JSON.stringify(jsonSelectData));
+        setSelectedClient(true);
+
+    }
+
+    const handleCancelSelectClient = () => {
+        setSelectedClient(false);
+        setShowClientSelected(false);
+    }
 
     const handleClickButton = () => {
-        setLoadedTable(!loadedTable);
-        console.log(`Testando: ${loadedTable}`);
-        let nTables = tables;
-        nTables.push({ title: "Tabela Padrão" });
-        setTables(nTables);
+        setShowAlert(false);
+        setAlertMessage("");
+        if (requestValue != null && requestValue !== "") {
+            searchClient();
+        }
+    }
+
+
+    const searchClient = async () => {
+        setShowClientSelected(false);
+        const response = await api.get(`/clientes/?cpf=${requestValue}`);
+
+        if (response.status === 200 || response.status === 304) {
+            console.log(typeof response.data);
+            if (response.data.length !== 0) {
+                setUser(response.data[0]);
+                setTimeout(() => {
+                    setShowClientSelected(true);
+                }, 200);
+            } else {
+                setAlertMessage(alerts[0]);
+                setShowAlert(true);
+            }
+        } else {
+            console.log("Error");
+        }
     }
 
     return (
@@ -131,6 +148,25 @@ const BuscarCliente = (props) => {
                     Busque o Cliente
                 </Typography>
             </Box>
+            <Collapse in={showAlert} style={{ paddingBottom: 5 }}>
+                <Alert
+                    severity="warning"
+                    action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setShowAlert(false);
+                            }}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                >
+                    {alertMessage}
+                </Alert>
+            </Collapse>
             <Box display="flex" justifyContent="center">
                 <Box p={1} bgcolor="grey.300" >
                     <Input value={requestValue} inputComponent={TextInput} placeholder="CPF do Cliente" onChange={handleChangeRequestValue} />
@@ -140,29 +176,39 @@ const BuscarCliente = (props) => {
                 </Box>
             </Box>
 
-            <Box display="flex" p={1} justifyContent="center">
-                <Box p={1} bgcolor="grey.300" >
-                    <Box mb={1} display="flex" paddingLeft={8} paddingRight={8} justifyContent="center">
-                        <Typography variant="p" className={classes.titleCardCliente}>
-                            Cliente Encontrado:
+            {
+                _showClientSelected && <Box display="flex" p={1} justifyContent="center">
+                    <Box p={1} bgcolor="grey.300" >
+                        <Box mb={1} display="flex" paddingLeft={8} paddingRight={8} justifyContent="center">
+                            <Typography variant="p" className={classes.titleCardCliente}>
+                                Cliente Encontrado:
                     </Typography>
-                    </Box>
-                    <Box display="flex" mb={1} p={1} justifyContent="center">
-                        <Typography variant="p" className={classes.textOrange}>
-                            {user.cpf}
-                        </Typography>
-                    </Box>
-                    <Box display="flex" mb={1} p={1} justifyContent="center">
-                        <Typography variant="p" className={classes.textBlueBold}>
-                            {user.name}
-                        </Typography>
-                    </Box>
-                    <Box>
-                        <BlueButton onClick={handleClickButton} fullWidth>Selecionar</BlueButton>
+                        </Box>
+                        <Box display="flex" mb={1} p={1} justifyContent="center">
+                            <Typography variant="p" className={classes.textOrange}>
+                                {user.cpf}
+                            </Typography>
+                        </Box>
+                        <Box display="flex" mb={1} p={1} justifyContent="center">
+                            <Typography variant="p" className={classes.textBlueBold}>
+                                {user.name}
+                            </Typography>
+                        </Box>
+                        {
+                            _selectedClient ?
+                                <Box display="flex">
+                                    <Button fullWidth onClick={handleCancelSelectClient} style={{ marginRight: 10 }}>Cancelar</Button>
+                                    <Link to="/select-type" style={{ textDecoration: 'none' }}>
+                                        <BlueButton fullWidth>Avançar</BlueButton>
+                                    </Link>
+                                </Box>
+                                : <Box>
+                                    <BlueButton onClick={handleClickSelectClient} fullWidth>Selecionar</BlueButton>
+                                </Box>
+                        }
                     </Box>
                 </Box>
-
-            </Box>
+            }
         </>
     );
 }

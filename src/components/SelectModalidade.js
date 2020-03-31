@@ -1,30 +1,8 @@
 import React, { useState } from 'react';
-import { Box, ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Radio, RadioGroup, Checkbox, ExpansionPanelDetails, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputBase, TextField, AppBar, Toolbar, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Typography, Menu, MenuItem, Button, Container } from '@material-ui/core';
+import { Box, Typography, Button } from '@material-ui/core';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-// import * as Colors from '@material-ui/styles/colors';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import getMuiTheme from '@material-ui/styles/getMuiTheme';
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
-import PropTypes from 'prop-types';
-import MaskedInput from 'react-text-mask';
-import NumberFormat from 'react-number-format';
-import { TextInput } from "./MaskedInput";
+import { Link } from 'react-router-dom';
 
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import AllInboxIcon from '@material-ui/icons/AllInbox';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import clsx from 'clsx';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import StyleIcon from '@material-ui/icons/Style';
-
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import InputMask from 'react-input-mask'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -93,28 +71,20 @@ const BlueButton = withStyles((theme) => ({
     },
 }))(Button);
 
+const DisabledButton = withStyles((theme) => ({
+    root: {
+        color: theme.palette.getContrastText('#bfbfbf'),
+        backgroundColor: '#bfbfbf',
+        '&:hover': {
+            backgroundColor: '#bfbfbf',
+        },
+    },
+}))(Button);
+
 const SelectModalidade = (props) => {
-    const [requestValue, setRequestValue] = useState();
     const [loadedTable, setLoadedTable] = useState(false);
-    const [user, setUser] = useState({ cpf: "123.456.789-10", name: "Usuário Teste" });
     const [tables, setTables] = useState([]);
     const classes = useStyles();
-
-    const [values, setValues] = React.useState({
-        textmask: '(1  )    -    ',
-        numberformat: '1320',
-    });
-
-    const handleChangeRequestValue = (event) => {
-        setRequestValue(event.target.value);
-    }
-
-    const handleChange = (event) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        });
-    };
 
     const handleClickButton = () => {
         setLoadedTable(!loadedTable);
@@ -127,41 +97,33 @@ const SelectModalidade = (props) => {
     return (
         <>
             <Box display="flex" p={1} justifyContent="center">
-                <Typography variant="h5" className={classes.textBlue}>
-                    Escolha a Modalidade
-                </Typography>
-            </Box>
-            <Box display="flex" justifyContent="center">
-                <Box p={1} bgcolor="grey.300" >
-                    <Input value={requestValue} inputComponent={TextInput} placeholder="CPF do Cliente" onChange={handleChangeRequestValue} />
-                </Box>
                 <Box>
-                    <BlueButton onClick={handleClickButton} className={classes.buttonSearch}>Buscar</BlueButton>
-                </Box>
-            </Box>
-
-            <Box display="flex" p={1} justifyContent="center">
-                <Box p={1} bgcolor="grey.300" >
-                    <Box mb={1} display="flex" paddingLeft={8} paddingRight={8} justifyContent="center">
-                        <Typography variant="p" className={classes.titleCardCliente}>
-                            Cliente Encontrado:
-                    </Typography>
-                    </Box>
-                    <Box display="flex" mb={1} p={1} justifyContent="center">
-                        <Typography variant="p" className={classes.textOrange}>
-                            {user.cpf}
+                    <Box>
+                        <Typography variant="h5" className={classes.textBlue}>
+                            Escolha a Modalidade
                         </Typography>
                     </Box>
-                    <Box display="flex" mb={1} p={1} justifyContent="center">
-                        <Typography variant="p" className={classes.textBlueBold}>
-                            {user.name}
+                    <Box pt={5}>
+                        <Link to="/credit-data" style={{ textDecoration: 'none' }}>
+                            <BlueButton fullWidth size="large" onClick={handleClickButton}>Cartão de Crédito</BlueButton>
+                        </Link>
+                    </Box>
+                    <Box display="flex" justifyContent="center">
+                        <Typography variant="p" align="center">
+                            ou
                         </Typography>
                     </Box>
                     <Box>
-                        <BlueButton onClick={handleClickButton} fullWidth>Selecionar</BlueButton>
+                        {/* <Link to="/"> */}
+                        <DisabledButton disabled fullWidth size="large" onClick={handleClickButton}>Crédito Consignado</DisabledButton>
+                        {/* </Link> */}
+                    </Box>
+                    <Box display="flex" justifyContent="center">
+                        <Typography variant="p" align="center" style={{color: '#bfbfbf'}}>
+                            Em breve
+                        </Typography>
                     </Box>
                 </Box>
-
             </Box>
         </>
     );

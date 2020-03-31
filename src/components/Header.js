@@ -1,13 +1,6 @@
-import React, { useState } from 'react';
-import { makeStyles, Box, AppBar, Toolbar, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Typography, Menu, MenuItem, Button, Container } from '@material-ui/core';
-// import * as Colors from '@material-ui/styles/colors';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import getMuiTheme from '@material-ui/styles/getMuiTheme';
-
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import React from 'react';
+import { makeStyles, Box, Typography } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import AllInboxIcon from '@material-ui/icons/AllInbox';
 
 
 const useStyles = makeStyles((theme) => ({
